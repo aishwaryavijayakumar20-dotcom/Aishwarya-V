@@ -18,17 +18,21 @@ export default async function AuctionsPage({
   let dbError = false;
   
   try {
-    if (query) {
-      const { rows } = await pool.query(`
-        SELECT * FROM "Vessel"
-        WHERE name ILIKE $1
-           OR location ILIKE $1
-           OR type ILIKE $1
-      `, [`%${query}%`]);
-      vessels = rows;
+    if (process.env.DATABASE_URL) {
+      if (query) {
+        const { rows } = await pool.query(`
+          SELECT * FROM "Vessel"
+          WHERE name ILIKE $1
+             OR location ILIKE $1
+             OR type ILIKE $1
+        `, [`%${query}%`]);
+        vessels = rows;
+      } else {
+        const { rows } = await pool.query('SELECT * FROM "Vessel" ORDER BY id');
+        vessels = rows;
+      }
     } else {
-      const { rows } = await pool.query('SELECT * FROM "Vessel" ORDER BY id');
-      vessels = rows;
+      throw new Error("No DATABASE_URL configured");
     }
   } catch (err) {
     console.error("Database connection failed, using mock data fallback.");
