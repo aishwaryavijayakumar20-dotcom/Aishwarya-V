@@ -57,7 +57,6 @@ export default async function AuctionsPage({
           <p className="text-gray-500 text-lg mb-6">
             {vessels.length} vessel{vessels.length !== 1 ? "s" : ""} found
           </p>
-        )}
         <div style={{ width: "64px", height: "4px", backgroundColor: "#0EA5E9", marginBottom: "2rem", borderRadius: "99px" }} />
 
         {/* ── Search Bar ── */}
