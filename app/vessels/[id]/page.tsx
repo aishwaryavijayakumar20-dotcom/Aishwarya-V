@@ -11,8 +11,27 @@ export default async function VesselDetailsPage(props: {
 }) {
   const params = await props.params;
   
-  const { rows } = await pool.query('SELECT * FROM "Vessel" WHERE id = $1', [params.id]);
-  const vessel = rows[0] as Vessel;
+  let vessel: Vessel | null = null;
+  let dbError = false;
+
+  try {
+    const { rows } = await pool.query('SELECT * FROM "Vessel" WHERE id = $1', [params.id]);
+    vessel = rows[0] as Vessel;
+  } catch (err) {
+    console.error("Database connection failed:", err);
+    dbError = true;
+  }
+
+  if (dbError) {
+    return (
+      <div style={{ maxWidth: "800px", margin: "100px auto", textAlign: "center", fontFamily: "Inter, system-ui, sans-serif" }}>
+        <h1 style={{ fontSize: "2rem", color: "#ef4444", marginBottom: "16px" }}>Database Connection Failed</h1>
+        <p>Please configure the DATABASE_URL environment variable in Vercel.</p>
+        <Link href="/auctions" style={{ color: "#0EA5E9", marginTop: "20px", display: "inline-block" }}>← Back to Auctions</Link>
+      </div>
+    );
+  }
+
   if (!vessel) return notFound();
 
   const hasLocalImage = vessel.image?.startsWith("/vessels/");
