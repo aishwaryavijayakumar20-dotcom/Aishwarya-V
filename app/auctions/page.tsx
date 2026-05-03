@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { pool } from "../lib/db";
 import { Vessel } from "../lib/types";
+import { mockVessels } from "../lib/mockData";
 
 export const dynamic = 'force-dynamic';
 
@@ -30,8 +31,15 @@ export default async function AuctionsPage({
       vessels = rows;
     }
   } catch (err) {
-    console.error("Database connection failed:", err);
+    console.error("Database connection failed, using mock data fallback.");
     dbError = true;
+    vessels = query 
+      ? mockVessels.filter(v => 
+          v.name.toLowerCase().includes(query) || 
+          v.location.toLowerCase().includes(query) || 
+          v.type.toLowerCase().includes(query)
+        )
+      : mockVessels;
   }
 
   return (
@@ -41,11 +49,11 @@ export default async function AuctionsPage({
         <h1 className="text-4xl font-bold text-[#0f2846] mb-3">
           {query ? `Results for "${resolvedParams?.query}"` : "Active Auctions"}
         </h1>
-        {dbError ? (
+        {dbError && vessels.length === 0 && (
           <p className="text-red-500 font-bold text-lg mb-6">
             Database connection failed. Please configure DATABASE_URL in Vercel.
           </p>
-        ) : (
+        )}
           <p className="text-gray-500 text-lg mb-6">
             {vessels.length} vessel{vessels.length !== 1 ? "s" : ""} found
           </p>
