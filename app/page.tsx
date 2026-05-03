@@ -1,3 +1,4 @@
+// Triggering Vercel rebuild after directory structure fix
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
