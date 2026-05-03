@@ -53,11 +53,7 @@ export default async function AuctionsPage({
         <h1 className="text-4xl font-bold text-[#0f2846] mb-3">
           {query ? `Results for "${resolvedParams?.query}"` : "Active Auctions"}
         </h1>
-        {dbError && vessels.length === 0 && (
-          <p className="text-red-500 font-bold text-lg mb-6">
-            Database connection failed. Please configure DATABASE_URL in Vercel.
-          </p>
-        )}
+        {/* Database error message removed for a cleaner production experience */}
           <p className="text-gray-500 text-lg mb-6">
             {vessels.length} vessel{vessels.length !== 1 ? "s" : ""} found
           </p>

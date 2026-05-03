@@ -66,5 +66,16 @@ export const mockVessels: Vessel[] = [
     image: "https://images.unsplash.com/photo-1520522139393-ef75755c4783?w=800",
     status: "Ending Soon",
     description: "Elegant and social, designed for unforgettable days on the water with friends and family."
+  },
+  {
+    id: 7,
+    name: "Global Bulk Express",
+    location: "Singapore Port",
+    year: "2019",
+    type: "Bulk Carrier",
+    price: "$12,400,000",
+    image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=800",
+    status: "Live Auction",
+    description: "A high-capacity bulk carrier vessel in excellent condition, ideal for global logistics."
   }
 ];
