@@ -39,9 +39,9 @@ export default async function AuctionsPage({
     dbError = true;
     vessels = query 
       ? mockVessels.filter(v => 
-          v.name.toLowerCase().includes(query) || 
-          v.location.toLowerCase().includes(query) || 
-          v.type.toLowerCase().includes(query)
+          v.name?.toLowerCase().includes(query) || 
+          v.location?.toLowerCase().includes(query) || 
+          v.type?.toLowerCase().includes(query)
         )
       : mockVessels;
   }
